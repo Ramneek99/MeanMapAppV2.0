@@ -91,7 +91,8 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
             }
           }
           catch(err) {
-            message.innerHTML = "Input " + err;
+            // message.innerHTML = "Input " + err;
+            process.stdout.write('Age 100 not allowed /n');
           }
         // $http.post('/users', userData)
         //     .success(function (data) {
