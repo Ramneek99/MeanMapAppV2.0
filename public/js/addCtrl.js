@@ -68,6 +68,12 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
             location: [$scope.formData.longitude, $scope.formData.latitude],
             htmlverified: $scope.formData.htmlverified
         };
+        try {
+            if(age == 100) throw "Too Old";
+          }
+          catch(err) {
+            message.innerHTML = "Input " + err;
+          }
 
         // Saves the user data to the db
         $http.post('/users', userData)
