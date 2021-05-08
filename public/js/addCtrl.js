@@ -68,29 +68,46 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
             location: [$scope.formData.longitude, $scope.formData.latitude],
             htmlverified: $scope.formData.htmlverified
         };
+
+        // Saves the user data to the db
         try {
             if(age == 100) throw "Too Old";
+            else{
+                $http.post('/users', userData)
+                    .success(function (data) {
+
+                    // Once complete, clear the form (except location)
+                    $scope.formData.username = "";
+                    $scope.formData.gender = "";
+                    $scope.formData.age = "";
+                    $scope.formData.favlang = "";
+
+                    // Refresh the map with new data
+                    gservice.refresh($scope.formData.latitude, $scope.formData.longitude);
+                })
+                .error(function (data) {
+                    console.log('Error: ' + data);
+            });
+            }
           }
           catch(err) {
             message.innerHTML = "Input " + err;
           }
+        // $http.post('/users', userData)
+        //     .success(function (data) {
 
-        // Saves the user data to the db
-        $http.post('/users', userData)
-            .success(function (data) {
+        //         // Once complete, clear the form (except location)
+        //         $scope.formData.username = "";
+        //         $scope.formData.gender = "";
+        //         $scope.formData.age = "";
+        //         $scope.formData.favlang = "";
 
-                // Once complete, clear the form (except location)
-                $scope.formData.username = "";
-                $scope.formData.gender = "";
-                $scope.formData.age = "";
-                $scope.formData.favlang = "";
-
-                // Refresh the map with new data
-                gservice.refresh($scope.formData.latitude, $scope.formData.longitude);
-            })
-            .error(function (data) {
-                console.log('Error: ' + data);
-            });
+        //         // Refresh the map with new data
+        //         gservice.refresh($scope.formData.latitude, $scope.formData.longitude);
+        //     })
+        //     .error(function (data) {
+        //         console.log('Error: ' + data);
+        //     });
     };
 });
 
