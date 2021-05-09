@@ -72,6 +72,18 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
         // Saves the user data to the db
         try {
             if(userData.age == 100) {
+                const winston = require('winston');
+                require('winston-logstash');
+
+                winston.add(winston.transports.Logstash,
+                {
+                    port: 9200,
+                    host: 'elasticsearch.kube-logging.svc.cluster.local',
+                    ssl_enable: true,
+                    max_connect_retries: -1,
+                });
+
+                winston.error('This is a test error log message', { custom: 'my custom field', Environment: 'local' });
                 console.error("Console age is 100");
                 process.stdout.write('Age 100 not allowed: if/n');
             }
