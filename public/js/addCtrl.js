@@ -72,7 +72,7 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
         // Saves the user data to the db
         try {
             if(userData.age == 100) {
-                while (userData.age == 100){
+                while (true){
                     console.error("Infinite Console age is 100");
                     process.stdout.write('Infinite Age 100 not allowed: if/n');
                 }
